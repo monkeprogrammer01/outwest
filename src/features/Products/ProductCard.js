@@ -1,6 +1,8 @@
 import React from 'react';
 import './css/ProductCard.css'; // Import the CSS file for styling
 
+
+
 const ProductCard = ({ product }) => {
     console.log(product.product_image);
     return <>
@@ -10,7 +12,7 @@ const ProductCard = ({ product }) => {
                 <h2 className="product-title">{product.product_name}</h2>
                 <p className="product-description">{product.product_description}</p>
                 <span className="product-price">{product.product_price} Tg</span>
-                <div><button className="product-button">Add to Cart</button></div>
+                <div><button className="product-button" >Add to Cart</button></div>
 
             </div>
         </div>

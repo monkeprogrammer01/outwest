@@ -1,0 +1,16 @@
+.error-table {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    height: 250px;
+    background-color: #696969;
+    color: white;
+    border-radius: 4%;
+}
+
+#error-emodzi {
+    width: 100px;
+   
+    border-radius: 100%;
+}
