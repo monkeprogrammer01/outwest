@@ -4,12 +4,15 @@ import './css/profile.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../ErrorMessage'
+import ProductCard from '../../Products/ProductCard';
+import products from '../../Products/products'
 
 export default function Profile(){
     const [user, setUser] = useState({});
     const [error, setError] = useState();
     const token = localStorage.getItem('access_token');
-    const [showMessage, setShowMessage] = useState(false)
+    const [showMessage, setShowMessage] = useState(false);
+    const [products, setProducts] = useState()
     const navigate = useNavigate()
     useEffect(() => {
       if (!token) {
@@ -23,21 +26,26 @@ export default function Profile(){
           return;
       }
 
-      axios.get('http://localhost:8000/user/profile/', {
+      axios.get('http://127.0.0.1:8000/user/profile/', {
           headers: {
               'Authorization': `Bearer ${token}`
           }
       })
       .then(response => {
           console.log(response.data);
-          
+          console.log(response.data.basket)
           setUser(response.data); // Save the data in state
-          
       })
       .catch(error => {
-          console.error(error);
+        setShowMessage(true)
+        setTimeout(() => {
+            setShowMessage(false); 
+            navigate('/user/login');      // Redirect to login page
+        }, 1500);
+        console.error(error);
       });
-  }, [token]);
+  }, [token]); 
+
     return <> 
     <div className="user-info">
         <div className="user-image"><a><img src={UserImage}  id="profile" /></a></div>
@@ -50,6 +58,9 @@ export default function Profile(){
         </div>
 
         <div className="line" ></div>
+        <div className="products">
+      
+    </div>
         <div>
             <button onClick={logout} className="btn btn-danger" >Log out</button>
         </div>
