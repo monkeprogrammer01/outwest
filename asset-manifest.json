@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/outwest/static/css/main.32cafd0f.css",
-    "main.js": "/outwest/static/js/main.66689c76.js",
+    "main.js": "/outwest/static/js/main.305bf317.js",
     "static/js/453.70aaab03.chunk.js": "/outwest/static/js/453.70aaab03.chunk.js",
     "static/media/logo.jpg": "/outwest/static/media/logo.8f126bbf496a8b2677e9.jpg",
     "index.html": "/outwest/index.html",
@@ -11,11 +11,11 @@
     "static/media/bookmark-check.svg": "/outwest/static/media/bookmark-check.7fb082683b481b4c96e9394f9c9ac3bd.svg",
     "static/media/person-fill.svg": "/outwest/static/media/person-fill.63a2ba82ff71c94c39e35c989811b1b6.svg",
     "main.32cafd0f.css.map": "/outwest/static/css/main.32cafd0f.css.map",
-    "main.66689c76.js.map": "/outwest/static/js/main.66689c76.js.map",
+    "main.305bf317.js.map": "/outwest/static/js/main.305bf317.js.map",
     "453.70aaab03.chunk.js.map": "/outwest/static/js/453.70aaab03.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.32cafd0f.css",
-    "static/js/main.66689c76.js"
+    "static/js/main.305bf317.js"
   ]
 }
