@@ -1,11 +1,12 @@
 from django.urls import path, include
-from products.views import ProductAPIView
+from products.views import ProductAPIView, BasketAPIView
 from django.conf import settings
 from django.conf.urls.static import static
 app_name = "products/"
 
 urlpatterns = [
-    path("", ProductAPIView.as_view())
+    path("", ProductAPIView.as_view()),
+    path("add/", BasketAPIView.as_view()),
 ]
 
 
