@@ -65,6 +65,7 @@ export default function Profile(){
             <button onClick={logout} className="btn btn-danger" >Log out</button>
         </div>
         </div>
+        {user.basket}
         {showMessage && <ErrorMessage onClose={() => setShowMessage(false)} message="You are not logged in!" />}
     </>
 }

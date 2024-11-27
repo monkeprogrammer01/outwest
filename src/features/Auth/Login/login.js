@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import SuccessMessage from '../SuccessMessage'
+import { h4 } from 'framer-motion/client';
 
 function LoginForm() {
   const [user, setUser] = useState({
@@ -11,6 +12,8 @@ function LoginForm() {
   const [accessToken, setAccessToken] = useState()
   const [refreshToken, setRefreshToken] = useState()
   const [showSuccess, setShowSuccess] = useState(false)
+  const [showError, setShowError] = useState(false)
+  const [error, setError] = useState()
   const navigate = useNavigate();
   const handleChange = (e) => {
     setUser({
@@ -43,7 +46,11 @@ function LoginForm() {
       }, 1500);  // Adjust delay as desired
       console.log(response.data, access);  // Ответ от сервера
     } catch (error) {
-      console.error('Ошибка при входе:', error.response?.data || error.message);
+      setTimeout(() => {
+        setShowError(true)
+        setError(error.message)
+      }, 1500)
+      setShowError(false);
     }
   };
 
@@ -76,6 +83,7 @@ function LoginForm() {
                             value={user.password}
                             onChange={handleChange}
                         />
+                        {showError && <h6 style={{color: "red", textAlign: "center"}} >{error}</h6>}
                         </div>
                         <button type="submit" className="btn btn-success w-100">Login</button>
                     </form>

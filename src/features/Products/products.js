@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ProductCard from './ProductCard';
 
-
 export default function Main(){
 
     const [products, setProducts] = useState();
@@ -35,6 +34,8 @@ export default function Main(){
     return <>        
         {products.map((product) => (
             <ProductCard key={product.id} product={product} /> 
+            
         ))}
+    
     </>
 }
