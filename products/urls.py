@@ -1,5 +1,5 @@
 from django.urls import path, include
-from products.views import ProductAPIView, BasketAPIView
+from products.views import ProductAPIView, BasketAPIView, ProductCategoryAPIView
 from django.conf import settings
 from django.conf.urls.static import static
 app_name = "products/"
@@ -7,6 +7,8 @@ app_name = "products/"
 urlpatterns = [
     path("", ProductAPIView.as_view()),
     path("add/", BasketAPIView.as_view()),
+    path("mybasket/", BasketAPIView.as_view()),
+    path("category/", ProductCategoryAPIView.as_view()),
 ]
 
 

@@ -48,10 +48,12 @@ INSTALLED_APPS = [
     'products',
     'rest_framework',
     'corsheaders',
-    'rest_framework_simplejwt'
+    'rest_framework_simplejwt',
+    'orders'
 ]
 
 MIDDLEWARE = [
+'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -90,6 +92,12 @@ CORS_ALLOWED_ORIGINS = [
     "http://10.48.131.204:3000"
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://monkeprogrammer01.github.io",
+    "http://localhost:3000",
+    "http://10.48.131.204:3000",
+]
+
 CORS_ALLOW_METHODS = [
     'GET',
     'POST',
@@ -103,8 +111,10 @@ CORS_ALLOW_HEADERS = [
     'content-type',
     'authorization',
     'access-control-allow-headers',
-    'access-control-allow-origin'
+    'access-control-allow-origin',
+    "x-csrftoken",
 ]
+
 
 ROOT_URLCONF = 'outwest.urls'
 
@@ -163,6 +173,14 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Or another mail service
+EMAIL_PORT = 587  # Or the port your mail server uses
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'nurkasymovarsen06@gmail.com'
+EMAIL_HOST_PASSWORD = 'rijg gigf cscf nyqu'
+
 
 
 # Internationalization

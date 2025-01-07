@@ -4,8 +4,16 @@ meta {
   seq: 2
 }
 
-get {
+post {
   url: http://127.0.0.1:8000/products/add/
-  body: none
-  auth: none
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyNzQ2ODE4LCJpYXQiOjE3MzI3NDMyMTgsImp0aSI6IjYzYmZkNWNjNmU0NjRkNjVhMDhhZDEyMzVkNWRjOTk1IiwidXNlcl9pZCI6MjZ9.NmeennaINBMImr62M00HjTmAhlRn5PabOTFkkkZt6YA
+}
+
+body:json {
+  {"product": 5}
 }
