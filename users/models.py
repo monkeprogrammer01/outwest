@@ -29,11 +29,8 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
-<<<<<<< HEAD
     email_verified = models.BooleanField(default=False)
     verification_token = models.CharField(max_length=256, blank=True, null=True)
-=======
->>>>>>> 384c2b316e6797ff86583179b1a89c4a8317a014
     is_staff = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
