@@ -48,12 +48,19 @@ INSTALLED_APPS = [
     'products',
     'rest_framework',
     'corsheaders',
+<<<<<<< HEAD
     'rest_framework_simplejwt',
     'orders'
 ]
 
 MIDDLEWARE = [
 'corsheaders.middleware.CorsMiddleware',
+=======
+    'rest_framework_simplejwt'
+]
+
+MIDDLEWARE = [
+>>>>>>> 384c2b316e6797ff86583179b1a89c4a8317a014
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -92,12 +99,15 @@ CORS_ALLOWED_ORIGINS = [
     "http://10.48.131.204:3000"
 ]
 
+<<<<<<< HEAD
 CSRF_TRUSTED_ORIGINS = [
     "https://monkeprogrammer01.github.io",
     "http://localhost:3000",
     "http://10.48.131.204:3000",
 ]
 
+=======
+>>>>>>> 384c2b316e6797ff86583179b1a89c4a8317a014
 CORS_ALLOW_METHODS = [
     'GET',
     'POST',
@@ -111,11 +121,17 @@ CORS_ALLOW_HEADERS = [
     'content-type',
     'authorization',
     'access-control-allow-headers',
+<<<<<<< HEAD
     'access-control-allow-origin',
     "x-csrftoken",
 ]
 
 
+=======
+    'access-control-allow-origin'
+]
+
+>>>>>>> 384c2b316e6797ff86583179b1a89c4a8317a014
 ROOT_URLCONF = 'outwest.urls'
 
 AUTHENTICATION_BACKENDS = [
@@ -174,6 +190,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+<<<<<<< HEAD
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  # Or another mail service
 EMAIL_PORT = 587  # Or the port your mail server uses
@@ -182,6 +199,8 @@ EMAIL_HOST_USER = 'nurkasymovarsen06@gmail.com'
 EMAIL_HOST_PASSWORD = 'rijg gigf cscf nyqu'
 
 
+=======
+>>>>>>> 384c2b316e6797ff86583179b1a89c4a8317a014
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
