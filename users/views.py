@@ -21,7 +21,7 @@ def send_confirmation_email(user, request):
     token = default_token_generator.make_token(user)
     uid = urlsafe_base64_encode(str(user.pk).encode())
 
-    confirm_url = f"http://localhost:8000/user/email/confirm/{uid}/{token}/"
+    confirm_url = f"https://monkeprogrammer01.pythonanywhere.com/email/confirm/{uid}/{token}/"
 
     subject = "Подтвердите ваш email"
     message = f"Пожалуйста, подтвердите ваш email, перейдя по следующей ссылке: {confirm_url}"
@@ -108,11 +108,5 @@ class ProfileAPIView(APIView):
             "basket": products,
             "sum": final_sum}
 
-        json_data = serializers.serialize('json', basket)
-        user_data = {
-            "id": user.id,
-            "email": user.email,
-            "basket": json_data
-        }
         return Response(user_data)
 

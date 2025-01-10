@@ -33,9 +33,9 @@ MEDIA_ROOT = '/home/monkeprogrammer01/outwest/media'
 SECRET_KEY = 'django-insecure-@#juzymx=5t!l$nw_80sy%mev_kt8x#+o_d=6g8t)x17%_^c(4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['monkeprogrammer01.pythonanywhere.com', 'www.outwest.shop', 'outwest.shop']
 
 
 # Application definition
@@ -98,13 +98,15 @@ SIMPLE_JWT = {
 CORS_ALLOWED_ORIGINS = [
     "https://monkeprogrammer01.github.io",
     "http://localhost:3000",
-    "http://10.48.131.204:3000"
+    "http://10.48.131.204:3000",
+    'www.outwest.shop', 'outwest.shop'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://monkeprogrammer01.github.io",
     "http://localhost:3000",
     "http://10.48.131.204:3000",
+    'www.outwest.shop', 'outwest.shop'
 ]
 
 
@@ -114,6 +116,9 @@ CORS_ALLOW_METHODS = [
     'OPTIONS',  # Ensure OPTIONS method is allowed for preflight checks
     # Other methods as needed
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -156,14 +161,18 @@ WSGI_APPLICATION = 'outwest.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'outwest',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
-        'HOST': 'localhost',
-        'PORT': '5433'
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'monkeprogrammer0$outwest',  # Название базы данных
+        'USER': 'monkeprogrammer0',         # Ваше имя пользователя
+        'PASSWORD': 'nadeusgoldnova400774480',   # Ваш пароль от базы данных
+        'HOST': 'monkeprogrammer01.mysql.pythonanywhere-services.com',  # Адрес хоста
+        'PORT': '3306',                     # Порт MySQL (по умолчанию 3306)
+        'OPTIONS': {
+            'sql_mode': 'STRICT_TRANS_TABLES',  # Включаем строгий режим
+        },
     }
 }
+
 
 
 # Password validation
