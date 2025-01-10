@@ -10,9 +10,9 @@ class ProductCategory(models.Model):
 
 
 class Product(models.Model):
-    product_name = models.CharField()
+    product_name = models.CharField(max_length=32)
     product_image = models.ImageField(upload_to="product_images", default='media/product_images/default_product_image.png')
-    product_description = models.CharField()
+    product_description = models.CharField(max_length=64)
     product_count = models.IntegerField()
     product_price = models.IntegerField()
     product_category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)

@@ -12,13 +12,16 @@ from django.contrib.auth.tokens import default_token_generator
 from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import redirect
-
+from . serializers import RegistrationSerializer, LoginSerializer, ProfileSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
+from products.models import Basket, Product
 
 def send_confirmation_email(user, request):
     token = default_token_generator.make_token(user)
     uid = urlsafe_base64_encode(str(user.pk).encode())
 
-    confirm_url = f"http://localhost:8000/user/email/confirm/{uid}/{token}/"
+    confirm_url = f"https://monkeprogrammer01.pythonanywhere.com/email/confirm/{uid}/{token}/"
 
     subject = "Подтвердите ваш email"
     message = f"Пожалуйста, подтвердите ваш email, перейдя по следующей ссылке: {confirm_url}"
@@ -41,10 +44,7 @@ def email_confirm(request, uidb64, token):
     except Exception as e:
         messages.error(request, "Ошибка при подтверждении email!")
         return redirect('login')
-from . serializers import RegistrationSerializer, LoginSerializer, ProfileSerializer
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
-from products.models import Basket, Product
+
 
 
 class RegistrationAPIView(APIView):
@@ -57,8 +57,6 @@ class RegistrationAPIView(APIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         send_confirmation_email(user, request)
-
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         serializer.save()
 
@@ -109,11 +107,5 @@ class ProfileAPIView(APIView):
             "basket": products,
             "sum": final_sum}
 
-        json_data = serializers.serialize('json', basket)
-        user_data = {
-            "id": user.id,
-            "email": user.email,
-            "basket": json_data
-        }
         return Response(user_data)
 
