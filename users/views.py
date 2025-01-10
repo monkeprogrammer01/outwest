@@ -12,7 +12,10 @@ from django.contrib.auth.tokens import default_token_generator
 from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import redirect
-
+from . serializers import RegistrationSerializer, LoginSerializer, ProfileSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
+from products.models import Basket, Product
 
 def send_confirmation_email(user, request):
     token = default_token_generator.make_token(user)
@@ -41,10 +44,7 @@ def email_confirm(request, uidb64, token):
     except Exception as e:
         messages.error(request, "Ошибка при подтверждении email!")
         return redirect('login')
-from . serializers import RegistrationSerializer, LoginSerializer, ProfileSerializer
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
-from products.models import Basket, Product
+
 
 
 class RegistrationAPIView(APIView):
@@ -58,7 +58,6 @@ class RegistrationAPIView(APIView):
         user = serializer.save()
         send_confirmation_email(user, request)
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         serializer.save()
 
