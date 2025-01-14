@@ -21,7 +21,7 @@ def send_confirmation_email(user, request):
     token = default_token_generator.make_token(user)
     uid = urlsafe_base64_encode(str(user.pk).encode())
 
-    confirm_url = f"https://monkeprogrammer01.pythonanywhere.com/user/email/confirm/{uid}/{token}/"
+    confirm_url = f"http://localhost:8000/user/email/confirm/{uid}/{token}/"
 
     subject = "Подтвердите ваш email"
     message = f"Пожалуйста, подтвердите ваш email, перейдя по следующей ссылке: {confirm_url}"
@@ -29,7 +29,7 @@ def send_confirmation_email(user, request):
 
 def email_confirm(request, uidb64, token):
     try:
-        uid = urlsafe_base64_decode(uidb64).decode()
+        uid = int(urlsafe_base64_decode(uidb64).decode())
         user = User.objects.get(pk=uid)
 
         if default_token_generator.check_token(user, token):
@@ -40,12 +40,12 @@ def email_confirm(request, uidb64, token):
 
         else:
             messages.error(request, "Невалидная ссылка подтверждения!")
-            return redirect("login")
+            return render(request, 'users/main.html')
+
 
     except Exception as e:
         messages.error(request, "Ошибка при подтверждении email!")
-        return redirect('login')
-
+        return redirect('users/login')
 
 
 class RegistrationAPIView(APIView):

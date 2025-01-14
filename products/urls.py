@@ -1,5 +1,5 @@
 from django.urls import path, include
-from products.views import ProductAPIView, BasketAPIView, ProductCategoryAPIView
+from products.views import ProductAPIView, BasketAPIView, ProductCategoryAPIView, get_product
 
 from products.views import ProductAPIView, BasketAPIView
 from django.conf import settings
@@ -11,7 +11,7 @@ urlpatterns = [
     path("add/", BasketAPIView.as_view()),
     path("mybasket/", BasketAPIView.as_view()),
     path("category/", ProductCategoryAPIView.as_view()),
-
+    path("<int:pk>/", get_product),
 ]
 
 

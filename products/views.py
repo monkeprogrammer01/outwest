@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework import status
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.renderers import JSONRenderer
 from rest_framework.views import APIView
 from products.models import Product, Basket, ProductCategory
 from rest_framework.response import Response
@@ -23,6 +24,16 @@ class ProductAPIView(APIView):
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
 
+def get_product(request, pk):
+    product = Product.objects.get(id=pk)
+    serializer = ProductSerializer(product)
+    response = Response(serializer.data)
+    response.accepted_renderer = JSONRenderer()
+    response.accepted_media_type = 'application/json'
+    response.renderer_context = {
+        'request': request,
+    }
+    return response
 
 class BasketAPIView(APIView):
     permission_classes = [IsAuthenticated]

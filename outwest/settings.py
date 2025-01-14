@@ -19,11 +19,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 AUTH_USER_MODEL = 'users.User'
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/home/monkeprogrammer01/outwest/static'
+# STATIC_ROOT = '/home/monkeprogrammer01/outwest/static'
 
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/home/monkeprogrammer01/outwest/media'
+# MEDIA_ROOT = '/home/monkeprogrammer01/outwest/media'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
