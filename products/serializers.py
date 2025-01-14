@@ -1,20 +1,22 @@
-from rest_framework import serializers
-from .models import Product, Basket, ProductCategory  # Adjust the import based on your app structure
 
-
-from cffi.model import qualify
 from rest_framework import serializers
-from .models import Product, Basket  # Adjust the import based on your app structure
+from .models import Product, Basket, ProductCategory, ProductImage
 
 class ProductCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductCategory
         fields = ['id', 'name']
 
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductImage
+        fields = ['image']
+
 class ProductSerializer(serializers.ModelSerializer):
+    images = ImageSerializer(many=True, read_only=True)
     class Meta:
         model = Product
-        fields = ['product_image', 'product_name', 'product_description', 'product_price' ,'id', 'product_category' ]
+        fields = [ 'product_name', 'product_description', 'product_price' ,'id', 'product_category', 'images' ]
 
 
 class BasketSerializer(serializers.ModelSerializer):

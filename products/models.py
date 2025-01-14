@@ -11,7 +11,6 @@ class ProductCategory(models.Model):
 
 class Product(models.Model):
     product_name = models.CharField(max_length=32)
-    product_image = models.ImageField(upload_to="product_images", default='media/product_images/default_product_image.png')
     product_description = models.CharField(max_length=64)
     product_count = models.IntegerField()
     product_price = models.IntegerField()
@@ -20,6 +19,9 @@ class Product(models.Model):
     def __str__(self):
         return self.product_name
 
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="images")
+    image = models.ImageField(upload_to="product_images/", )
 
 class Basket(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)

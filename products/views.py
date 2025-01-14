@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from products.models import Product, Basket, ProductCategory
 from rest_framework.response import Response
 from products.serializers import ProductSerializer, BasketSerializer, ProductCategorySerializer
+from rest_framework.decorators import api_view
 
 class ProductCategoryAPIView(APIView):
     permission_classes = [AllowAny]
@@ -24,16 +25,13 @@ class ProductAPIView(APIView):
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
 
-def get_product(request, pk):
-    product = Product.objects.get(id=pk)
-    serializer = ProductSerializer(product)
-    response = Response(serializer.data)
-    response.accepted_renderer = JSONRenderer()
-    response.accepted_media_type = 'application/json'
-    response.renderer_context = {
-        'request': request,
-    }
-    return response
+
+class GetProductAPIView(APIView):
+    permission_classes = (AllowAny, )
+    def get(self, request, pk):
+        product = Product.objects.get(id=pk)
+        serializer = ProductSerializer(product)
+        return Response(serializer.data)
 
 class BasketAPIView(APIView):
     permission_classes = [IsAuthenticated]
