@@ -25,7 +25,6 @@ STATIC_ROOT = '/home/monkeprogrammer01/outwest/static'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = '/home/monkeprogrammer01/outwest/media'
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -33,9 +32,9 @@ MEDIA_ROOT = '/home/monkeprogrammer01/outwest/media'
 SECRET_KEY = 'django-insecure-@#juzymx=5t!l$nw_80sy%mev_kt8x#+o_d=6g8t)x17%_^c(4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['monkeprogrammer01.pythonanywhere.com', 'www.outwest.shop', 'outwest.shop']
+ALLOWED_HOSTS = ['monkeprogrammer01.pythonanywhere.com', 'www.outwest.shop', 'outwest.shop', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -57,10 +56,6 @@ INSTALLED_APPS = [
     'orders'
 ]
 
-MIDDLEWARE = [
-'corsheaders.middleware.CorsMiddleware',
-    'rest_framework_simplejwt'
-]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -70,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'rest_framework_simplejwt',
     'django.middleware.csrf.CsrfViewMiddleware'
 ]
 
@@ -99,14 +95,14 @@ CORS_ALLOWED_ORIGINS = [
     "https://monkeprogrammer01.github.io",
     "http://localhost:3000",
     "http://10.48.131.204:3000",
-    'www.outwest.shop', 'outwest.shop'
+    'https://www.outwest.shop', 'https://outwest.shop',     "http://localhost:8000",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://monkeprogrammer01.github.io",
     "http://localhost:3000",
     "http://10.48.131.204:3000",
-    'www.outwest.shop', 'outwest.shop'
+    'https://www.outwest.shop', 'https://outwest.shop', "http://localhost:8000",
 ]
 
 
@@ -161,15 +157,13 @@ WSGI_APPLICATION = 'outwest.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'monkeprogrammer0$outwest',  # Название базы данных
-        'USER': 'monkeprogrammer0',         # Ваше имя пользователя
-        'PASSWORD': 'nadeusgoldnova400774480',   # Ваш пароль от базы данных
-        'HOST': 'monkeprogrammer01.mysql.pythonanywhere-services.com',  # Адрес хоста
-        'PORT': '3306',                     # Порт MySQL (по умолчанию 3306)
-        'OPTIONS': {
-            'sql_mode': 'STRICT_TRANS_TABLES',  # Включаем строгий режим
-        },
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'outwest',  # Имя базы данных
+        'USER': 'postgres',  # Имя пользователя
+        'PASSWORD': '1234',  # Пароль
+        'host': 'localhost',
+         # Название контейнера базы данных в Docker
+        'PORT': '5433',  # Порт PostgreSQL
     }
 }
 
@@ -217,7 +211,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

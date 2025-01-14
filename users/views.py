@@ -11,7 +11,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
 from django.conf import settings
 from django.contrib import messages
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from . serializers import RegistrationSerializer, LoginSerializer, ProfileSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
@@ -21,7 +21,7 @@ def send_confirmation_email(user, request):
     token = default_token_generator.make_token(user)
     uid = urlsafe_base64_encode(str(user.pk).encode())
 
-    confirm_url = f"https://monkeprogrammer01.pythonanywhere.com/email/confirm/{uid}/{token}/"
+    confirm_url = f"https://monkeprogrammer01.pythonanywhere.com/user/email/confirm/{uid}/{token}/"
 
     subject = "Подтвердите ваш email"
     message = f"Пожалуйста, подтвердите ваш email, перейдя по следующей ссылке: {confirm_url}"
@@ -36,7 +36,8 @@ def email_confirm(request, uidb64, token):
             user.email_verified = True
             user.save()
             messages.success(request, "Ваш email успешно подтверждён!")
-            return redirect("login")
+            return render(request, 'users/main.html')
+
         else:
             messages.error(request, "Невалидная ссылка подтверждения!")
             return redirect("login")

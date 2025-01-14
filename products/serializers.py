@@ -16,14 +16,6 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = ['product_image', 'product_name', 'product_description', 'product_price' ,'id', 'product_category' ]
 
-class BasketSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Basket
-        fields = ['product', 'quantity',]
-
-
-        fields = ['product_image', 'product_name', 'product_description', 'product_price', 'id' ]
 
 class BasketSerializer(serializers.ModelSerializer):
     class Meta:
