@@ -64,7 +64,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'rest_framework_simplejwt',
     'django.middleware.csrf.CsrfViewMiddleware'
 ]
 
