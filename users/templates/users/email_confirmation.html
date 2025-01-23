@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подтверждение Email</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333333;
+            font-size: 24px;
+            text-align: center;
+        }
+        p {
+            font-size: 16px;
+            color: #555555;
+            line-height: 1.5;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            background-color: #28a745;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Подтвердите ваш Email</h1>
+        <p>Здравствуйте!</p>
+        <p>Для завершения регистрации на нашем сайте, пожалуйста, подтвердите ваш email, перейдя по следующей ссылке:</p>
+        <a href="{{ confirm_url }}" class="btn">Подтвердить Email</a>
+        <p>Если вы не регистрировались на нашем сайте, просто игнорируйте это письмо.</p>
+    </div>
+</body>
+</html>
