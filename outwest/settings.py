@@ -22,11 +22,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 AUTH_USER_MODEL = 'users.User'
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = '/home/monkeprogrammer01/outwest/static'
+STATIC_ROOT = '/home/monkeprogrammer01/outwest/static'
 
 
 MEDIA_URL = '/media/'
-# MEDIA_ROOT = '/home/monkeprogrammer01/outwest/media'
+MEDIA_ROOT = '/home/monkeprogrammer01/outwest/media'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -165,6 +165,16 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'monkeprogrammer0$outwest',
+#         'USER': 'monkeprogrammer0',
+#         'PASSWORD': 'nadeusgoldnova400774480',
+#         'HOST': 'monkeprogrammer01.mysql.pythonanywhere-services.com',
+#         'PORT': '3306',
+#     }
+# }
 
 
 # Password validation

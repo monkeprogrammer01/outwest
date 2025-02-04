@@ -3,22 +3,32 @@ from django.http import JsonResponse
 import hmac
 import hashlib
 
-def notification_handler(request):
-    if request.method == "POST":
-        # Получите данные уведомления
-        data = request.POST
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from payments.models import Order, OrderItem
+from payments.serializers import OrderSerializer
+from products.models import Basket
 
-        # Проверьте подпись
-        notification_secret = "your_notification_secret"
-        signature = data.get("sha1_hash")
-        body = "".join([f"{key}={value}&" for key, value in data.items() if key != "sha1_hash"]).strip("&")
-        calculated_signature = hmac.new(notification_secret.encode(), body.encode(), hashlib.sha1).hexdigest()
 
-        if signature != calculated_signature:
-            return JsonResponse({"status": "error", "message": "Invalid signature"}, status=400)
+class OrderView(APIView):
+    permission_classes = [IsAuthenticated]
 
-        # Обработайте данные (например, сохраните статус платежа)
-        # Пример: статус = data["unaccepted"]
+    def post(self, request):
+        user = request.user
+        basket_items = Basket.objects.filter(user=user)
+        order = Order(customer=user, total_price=0)
+        order_items = []
+        total_price = 0
+        for item in basket_items:
+            total = item.quantity * item.product.product_price
+            total_price += total
+            order_items.append(OrderItem(order=order, product=item.product, quantity=item.quantity, price=total))
 
-        return JsonResponse({"status": "ok"})
-    return JsonResponse({"status": "error", "message": "Invalid method"}, status=405)
+        order.total_price = total_price
+        order.save()
+        OrderItem.objects.bulk_create(order_items)
+        basket_items.delete()
+        serializer = OrderSerializer(order)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)

@@ -117,6 +117,5 @@ class ProfileAPIView(APIView):
             "email": user.email,
             "basket": products,
             "sum": final_sum}
-
         return Response(user_data)
 

@@ -12,10 +12,10 @@ services:
       - db
 
   db:
-    image: postgres:13
+    image: postgres:16
     environment:
       POSTGRES_DB: outwest
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1234
     ports:
-      - "5432:5432"
+      - "5433:5433"
