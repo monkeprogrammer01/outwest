@@ -1,51 +1,59 @@
-from django.contrib.auth import authenticate, login
+from datetime import datetime, timedelta
+from xml.sax.handler import property_dom_node
+
+from django.contrib.auth import authenticate
+from django.template.loader import render_to_string
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from django.core import serializers
 from products.serializers import ProductSerializer
 from .models import User
 from django.core.mail import send_mail
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.contrib.auth.tokens import default_token_generator
-from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import redirect, render
-from . serializers import RegistrationSerializer, LoginSerializer, ProfileSerializer
+from . serializers import RegistrationSerializer, LoginSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
 from products.models import Basket, Product
+import jwt
+from django.conf import settings
 
 def send_confirmation_email(user, request):
-    token = default_token_generator.make_token(user)
+    token = jwt.encode({"id": user.pk, "exp": datetime.now() + timedelta(minutes=5)}, settings.SECRET_KEY, algorithm='HS256')
     uid = urlsafe_base64_encode(str(user.pk).encode())
-
     confirm_url = f"http://localhost:8000/user/email/confirm/{uid}/{token}/"
-
     subject = "Подтвердите ваш email"
-    message = f"Пожалуйста, подтвердите ваш email, перейдя по следующей ссылке: {confirm_url}"
-    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])
+    message = render_to_string("users/email_confirmation.html", {
+        "confirm_url": confirm_url
+    })
+    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email], html_message=message)
 
 def email_confirm(request, uidb64, token):
     try:
-        uid = int(urlsafe_base64_decode(uidb64).decode())
+        uid = urlsafe_base64_decode(uidb64).decode()
         user = User.objects.get(pk=uid)
-
-        if default_token_generator.check_token(user, token):
-            user.email_verified = True
-            user.save()
-            messages.success(request, "Ваш email успешно подтверждён!")
-            return render(request, 'users/main.html')
-
-        else:
+        try:
+            payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
+            if payload['id'] == user.pk:
+                user.email_verified = True
+                user.save()
+                messages.success(request, "Ваш email успешно подтверждён!")
+                return render(request, 'users/email_confirmation.html')
+            else:
+                messages.error(request, "Невалидная ссылка подтверждения!")
+                return render(request, 'users/email_confirmation.html')
+        except jwt.ExpiredSignatureError:
+            messages.error(request, "Срок действия ссылки истек!")
+            return render(request, 'users/email_confirmation.html')
+        except jwt.InvalidTokenError:
             messages.error(request, "Невалидная ссылка подтверждения!")
-            return render(request, 'users/main.html')
-
-
+            return render(request, 'users/email_confirmation.html')
     except Exception as e:
         messages.error(request, "Ошибка при подтверждении email!")
         return redirect('users/login')
+
 
 
 class RegistrationAPIView(APIView):
@@ -54,11 +62,12 @@ class RegistrationAPIView(APIView):
 
     def post(self, request):
         user = request.data.get('user', {})
+        if User.objects.filter(email=user.get('email')).exists():
+            return Response({"detail": "This email already exists!"}, status=status.HTTP_400_BAD_REQUEST)
         serializer = self.serializer_class(data=user)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         send_confirmation_email(user, request)
-
 
         serializer.save()
 
