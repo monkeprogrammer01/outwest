@@ -2,8 +2,12 @@ from django.contrib import auth
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 from .models import *
-from users.models import User
+from users.models import User, Customer
 
+class CustomerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Customer
+        fields = ['user', 'full_name', 'region', 'city', 'postal_code', 'street', 'home', 'apartment', 'phone_number', 'kaspi_number']
 
 class RegistrationSerializer(serializers.ModelSerializer):
     email = serializers.EmailField()

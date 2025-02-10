@@ -1,0 +1,15 @@
+meta {
+  name: payment
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8000/payment/order/
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM4NzgyMDYwLCJpYXQiOjE3Mzg3Nzg0NjAsImp0aSI6IjY2ODQ4NDY2ZGMwOTQxNmI4ZTE4NzY3M2M5YTZiZTRmIiwidXNlcl9pZCI6Mjl9.lKrW5DAycotQqK2QRwuuDj4bFUxiE9Rp6sW8y7HP5wQ
+}

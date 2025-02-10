@@ -6,6 +6,10 @@ meta {
 
 post {
   url: http://localhost:8000/payment/order/
-  body: none
-  auth: none
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM4Njc1NzE5LCJpYXQiOjE3Mzg2NzIxMTksImp0aSI6Ijg4MWE3ZmQ1ODgwYjQ0ZTZiZWM2OWU2YTM2Y2I1ZDQ1IiwidXNlcl9pZCI6Mjl9.aFXcGhIkpAjjhV-qzlNzaEgXFJkImTwOvj8ScZzZQHM
 }

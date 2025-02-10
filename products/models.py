@@ -15,9 +15,14 @@ class Product(models.Model):
     product_count = models.IntegerField()
     product_price = models.IntegerField()
     product_category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
-
     def __str__(self):
         return self.product_name
+
+class ProductSize(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product_size = models.CharField(max_length=2, default="S")
+    def __str__(self):
+        return self.product_size
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="images")

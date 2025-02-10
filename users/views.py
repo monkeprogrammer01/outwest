@@ -1,24 +1,30 @@
 from datetime import datetime, timedelta
 from xml.sax.handler import property_dom_node
-
+import os
 from django.contrib.auth import authenticate
 from django.template.loader import render_to_string
+from dotenv import load_dotenv
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
+
+from payments.models import OrderItem
 from products.serializers import ProductSerializer
-from .models import User
+from telegram_app.order_message import send_telegram_message
+from .models import User, Customer
 from django.core.mail import send_mail
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib import messages
 from django.shortcuts import redirect, render
-from . serializers import RegistrationSerializer, LoginSerializer
+from . serializers import RegistrationSerializer, LoginSerializer, CustomerSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
 from products.models import Basket, Product
 import jwt
 from django.conf import settings
+
+load_dotenv()
 
 def send_confirmation_email(user, request):
     token = jwt.encode({"id": user.pk, "exp": datetime.now() + timedelta(minutes=5)}, settings.SECRET_KEY, algorithm='HS256')
@@ -119,3 +125,21 @@ class ProfileAPIView(APIView):
             "sum": final_sum}
         return Response(user_data)
 
+class CustomerAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = CustomerSerializer
+
+    def post(self, request):
+        user = self.request.user
+        customer = request.data.get('customerData', {})
+        customer['user'] = user.id
+        serializer = self.serializer_class(data=customer)
+        if serializer.is_valid():
+            serializer.save()  # Сохраняем данные
+
+            message = f"""Новый заказ от {user.email}
+            """
+            send_telegram_message(message, os.getenv("CHAT_ID"), os.getenv("BOT_TOKEN"))
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

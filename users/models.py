@@ -50,3 +50,15 @@ class User(AbstractBaseUser, PermissionsMixin):
         token = jwt.encode({"id": self.pk, "exp": int(dt.strftime('%s'))}, settings.SECRET_KEY, algorithm='HS256')
 
         return token
+
+class Customer(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=256)
+    region = models.CharField(max_length=64)
+    city = models.CharField(max_length=64)
+    postal_code = models.PositiveIntegerField()
+    street = models.CharField(max_length=64)
+    home = models.CharField(max_length=16)
+    apartment = models.CharField(max_length=8)
+    phone_number = models.PositiveIntegerField(default=0)
+    kaspi_number = models.PositiveIntegerField(default=0)
