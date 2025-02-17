@@ -1,6 +1,6 @@
 # created by virtualenv automatically
 # Virtual environment
-venv/
+.venv/
 __pycache__/
 *.pyc
 *.pyo
