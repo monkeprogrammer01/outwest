@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from dotenv import load_dotenv
 
 from telegram_app.order_message import send_telegram_message
@@ -10,6 +11,8 @@ from payments.serializers import OrderSerializer
 from products.models import Basket
 import os
 
+from users.models import Customer
+
 load_dotenv()
 
 class OrderView(APIView):
@@ -18,8 +21,12 @@ class OrderView(APIView):
 
     def post(self, request):
         user = request.user
+
+        selected_address = request.data.get("selectedAddress")
+        address = get_object_or_404(Customer, pk=selected_address, user=user)
+
         basket_items = Basket.objects.filter(user=user)
-        order = Order(customer=user, total_price=0)
+        order = Order(customer=address, total_price=0)
         order_items = []
         total_price = 0
         for item in basket_items:
@@ -37,6 +44,16 @@ class OrderView(APIView):
 Новый заказ!
 Клиент: {user.email}
 Товар: {[{item.product.product_name, item.quantity} for item in order_items]}
-Сумма: {order.total_price}"""
+Сумма: {order.total_price}
+Адрес: {address.city}, {address.apartment}
+"""
         send_telegram_message(message, os.getenv("CHAT_ID"), os.getenv("BOT_TOKEN"))
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+class OrderListView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        user = self.request.user
+        orders = Order.objects.filter(customer__user=user)
+        serializer = OrderSerializer(orders, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

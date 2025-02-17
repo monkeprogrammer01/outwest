@@ -1,0 +1,15 @@
+meta {
+  name: get orders
+  type: http
+  seq: 6
+}
+
+get {
+  url: http://localhost:8000/payment/get-my-orders/
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM5NTQ5NzI1LCJpYXQiOjE3Mzk1NDYxMjUsImp0aSI6ImE5YWY1M2EzODZhNjQ1YTFiNmI0NzUxM2IwODY3ZjllIiwidXNlcl9pZCI6Mjl9.8x_LqUwr5gS78haGU7mvucaeOj1-Itz2WO5ohY5l4s8
+}

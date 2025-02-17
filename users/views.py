@@ -94,8 +94,8 @@ class LoginAPIView(APIView):
         user = authenticate(request, username=email, password=password)
 
         if user is not None:
-            if not user.email_verified:
-                return Response({"detail": "Please confirm your email, before logging in."})
+            # if not user.email_verified:
+            #     return Response({"detail": "Please confirm your email, before logging in."})
             refresh = RefreshToken.for_user(user)
             return Response({
                 "access": str(refresh.access_token),
@@ -107,7 +107,6 @@ class LoginAPIView(APIView):
 
 class ProfileAPIView(APIView):
     permission_classes = [IsAuthenticated]
-    # renderer_classes = [UserJSONRenderer]  # Удалите эту строку, если она есть
 
     def get(self, request):
         user = self.request.user
@@ -143,3 +142,11 @@ class CustomerAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class CustomerListAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        user = self.request.user
+        addresses = Customer.objects.filter(user=user)
+        serializer = CustomerSerializer(addresses, many=True)
+        return Response(serializer.data)

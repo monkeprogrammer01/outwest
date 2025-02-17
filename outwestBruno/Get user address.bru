@@ -1,0 +1,15 @@
+meta {
+  name: Get user address
+  type: http
+  seq: 4
+}
+
+get {
+  url: http://localhost:8000/user/get-addresses
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM5Mzg5ODYxLCJpYXQiOjE3MzkzODYyNjEsImp0aSI6Ijk0ZmFlZjhhMzYyNTRiODNhYzYyZWRmMmU5YmQwZGJmIiwidXNlcl9pZCI6Mjl9.m_JgN99DVTKvZDRtMNTKpB99nbDZRB_QjcDys1WLU8c
+}
